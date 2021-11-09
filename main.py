@@ -4,6 +4,7 @@
 import pygame
 import os
 from player import Player
+from enemy import Enemy
 
 # setting up window
 WIDTH, HEIGHT = 1000, 1000
@@ -19,7 +20,17 @@ PLAYER_IMAGE = pygame.image.load(
 )
 PLAYER = pygame.transform.scale(PLAYER_IMAGE, (50, 50))
 
+# create the player object
 P = Player(50, 50, PLAYER)
+
+# test enemy image
+ENEMY_IMAGE = pygame.image.load(
+    os.path.join('Assets', 'sasuke.png')
+)
+ENEMY = pygame.transform.scale(ENEMY_IMAGE, (50, 50))
+
+# create the enemy object
+E = Enemy(300, 300, ENEMY)
 
 # main function
 def main():
@@ -45,8 +56,14 @@ def main():
         # handle the players movement based on WASD
         P.handlePlayerMovement()
 
+        # update the enemys movement
+        E.move(P)
+
         # draw the test player
         P.draw(WINDOW)
+
+        # draw the test enemy
+        E.draw(WINDOW)
 
         # update the window
         pygame.display.update()
