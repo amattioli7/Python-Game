@@ -42,6 +42,9 @@ def main():
     # generate the map
     W.createWorld()
 
+    # draw the map
+    W.drawWorld(WINDOW)
+
     # set up clock variable
     clock = pygame.time.Clock()
 

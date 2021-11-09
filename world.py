@@ -21,6 +21,7 @@ class World:
         Note: we are going to want to render 11 chunks on x and y at all times (thats all we need to render)
     """
 
+    # createWorld function creates the world by generating chunks and adding them to the world dictionary
     def createWorld(self):
         for yPos in range(10):
             for xPos in range(10):
@@ -34,10 +35,9 @@ class World:
                 c.generateChunk()
                 
                 self.map[str(targetX) + ',' + str(targetY)] = c
-                print(str(c.getXCoord()) + ',' + str(c.getYCoord()))
-        #print(self.map)
 
-    #def drawWorld(self):
-        #for key in self.map:
+    def drawWorld(self, window):
+        for key in self.map:
             #for each key (chunk) in the map (this will be changed), draw the chunk
+            self.map[key].drawChunk(window)
 
