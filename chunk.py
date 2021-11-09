@@ -29,3 +29,9 @@ class Chunk:
     # getYCoord function to return tiles y coord
     def getYCoord(self):
         return self.y
+
+    # getTiles function to return tiles of chunk
+    def getTiles(self):
+        return self.tiles
+
+    
