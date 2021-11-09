@@ -13,6 +13,7 @@ So, we should be able to load in all of the chunks within a certain range of the
 
 # imports
 import pygame
+from tile import Tile
 
 class Chunk:
 
@@ -33,5 +34,26 @@ class Chunk:
     # getTiles function to return tiles of chunk
     def getTiles(self):
         return self.tiles
+
+# generateChunk function that generates 10x10 chunks
+def generateChunk(x, y):
+
+    # creating empty list of chunkData
+    chunkData = []
+
+    for yPos in range(10):
+        for xPos in range(10):
+            targetX = x + (xPos*10)
+            targetY = y + (yPos*10)
+            # set tile type
+            # TODO
+
+            # now make the tile with the x and y
+            t = Tile(targetX, targetY, None, None)
+            print(targetX, targetY)
+
+    # return the list of 100 tiles (which are a 10x10 grid) for this chunk
+    return chunkData
+
 
     
