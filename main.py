@@ -42,8 +42,20 @@ def main():
         # fill the window with white fill
         WINDOW.fill((255, 255, 255))
 
+        # get the keys that are pressed
+        keys_pressed = pygame.key.get_pressed()
+
+        if keys_pressed[pygame.K_w]:
+            P.updateLocation(P.getXCoord(), P.getYCoord()-2)
+        if keys_pressed[pygame.K_s]:
+            P.updateLocation(P.getXCoord(), P.getYCoord()+2)
+        if keys_pressed[pygame.K_a]:
+            P.updateLocation(P.getXCoord()-2, P.getYCoord())
+        if keys_pressed[pygame.K_d]:
+            P.updateLocation(P.getXCoord()+2, P.getYCoord())
+    
+
         # draw the test player
-        P.updateLocation(P.getXCoord()+1, P.getYCoord()+1)
         P.draw(WINDOW)
 
         # update the window
