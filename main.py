@@ -43,6 +43,7 @@ def main():
         WINDOW.fill((255, 255, 255))
 
         # draw the test player
+        P.updateLocation(P.getXCoord()+1, P.getYCoord()+1)
         P.draw(WINDOW)
 
         # update the window
