@@ -15,6 +15,31 @@ class Player:
     def draw(self, window):
         window.blit(self.image, (self.x, self.y))
 
+    def handlePlayerMovement(self):
+
+        # get the keys that are pressed
+        keys_pressed = pygame.key.get_pressed()
+
+        # set temporary values for x, y, and v
+        x = 0
+        y = 0
+        v = 1
+
+        # update the values based on key presses
+        if keys_pressed[pygame.K_w]:
+            y = -2
+        if keys_pressed[pygame.K_s]:
+            y = 2
+        if keys_pressed[pygame.K_a]:
+            x = -2
+        if keys_pressed[pygame.K_d]:
+            x = 2
+        if keys_pressed[pygame.K_LSHIFT]:
+            v = 2
+
+        # update the players location
+        self.updateLocation((self.x + (x*v)), (self.y + (y*v)))
+
     # updateLocation function to update the players location
     def updateLocation(self, x, y):
         self.x = x
