@@ -1,2 +1,3 @@
 # Python Game
- Python Game using PyGame
+ Title: Unknown
+ Developer: Adam Mattioli
