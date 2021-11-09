@@ -19,10 +19,10 @@ from tile import Tile
 class Chunk:
 
     # constructor for Chunk object
-    def __init__(self, x, y, tiles):
+    def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.tiles = tiles
+        self.tiles = []
 
     # getXCoord function to return tiles x coord
     def getXCoord(self):
@@ -36,28 +36,22 @@ class Chunk:
     def getTiles(self):
         return self.tiles
 
-# generateChunk function that generates 10x10 chunks
-def generateChunk(x, y):
+    # generateChunk function that generates 10x10 chunks
+    def generateChunk(self):
 
-    # creating empty list of chunkData
-    chunkData = []
+        #print('Chunk: ' + str(x) + ',' + str(y) + '-----------------------------------------------------')
+        for yPos in range(10):
+            for xPos in range(10):
+                targetX = self.x + (xPos*10)
+                targetY = self.y + (yPos*10)
+                # set tile type
+                # for now, lets do random between 3 types
+                randomNum = random.randint(0, 2)
 
-    print('Chunk: ' + str(x) + ',' + str(y) + '-----------------------------------------------------')
-    for yPos in range(10):
-        for xPos in range(10):
-            targetX = x + (xPos*10)
-            targetY = y + (yPos*10)
-            # set tile type
-            # for now, lets do random between 3 types
-            randomNum = random.randint(0, 2)
-
-            # now make the tile with the x and y
-            t = Tile(targetX, targetY, randomNum)
-            print(targetX, targetY, randomNum)
-            chunkData.append(t)
-
-    # return the list of 100 tiles (which are a 10x10 grid) for this chunk
-    return chunkData
+                # now make the tile with the x and y
+                t = Tile(targetX, targetY, randomNum)
+                #print(targetX, targetY, randomNum)
+                self.tiles.append(t)
 
 
     
