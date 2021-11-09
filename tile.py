@@ -6,15 +6,10 @@ import pygame
 class Tile:
 
     # constructor for Tile object
-    def __init__(self, x, y, type, image):
+    def __init__(self, x, y, type):
         self.x = x
         self.y = y
         self.type = type
-        self.image = image
-
-    # draw function to draw tile
-    def draw(self, window):
-        window.blit(self.image, (self.x, self.y))
 
     # getXCoord function to return tiles x coord
     def getXCoord(self):

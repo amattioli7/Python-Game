@@ -5,7 +5,7 @@ import pygame
 import os
 from player import Player
 from enemy import Enemy
-from chunk import generateChunk
+from world import createWorld
 
 # setting up window
 WIDTH, HEIGHT = 1000, 1000
@@ -36,7 +36,7 @@ E = Enemy(300, 300, ENEMY)
 # main function
 def main():
 
-    generateChunk(0, 0)
+    createWorld()
 
     # set up clock variable
     clock = pygame.time.Clock()
