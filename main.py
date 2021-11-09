@@ -45,14 +45,25 @@ def main():
         # get the keys that are pressed
         keys_pressed = pygame.key.get_pressed()
 
+        # set temporary values for x, y, and v
+        x = 0
+        y = 0
+        v = 1
+
+        # update the values based on key presses
         if keys_pressed[pygame.K_w]:
-            P.updateLocation(P.getXCoord(), P.getYCoord()-2)
+            y = -2
         if keys_pressed[pygame.K_s]:
-            P.updateLocation(P.getXCoord(), P.getYCoord()+2)
+            y = 2
         if keys_pressed[pygame.K_a]:
-            P.updateLocation(P.getXCoord()-2, P.getYCoord())
+            x = -2
         if keys_pressed[pygame.K_d]:
-            P.updateLocation(P.getXCoord()+2, P.getYCoord())
+            x = 2
+        if keys_pressed[pygame.K_LSHIFT]:
+            v = 2
+
+        # update the players location
+        P.updateLocation((P.getXCoord() + (x*v)), (P.getYCoord() + (y*v)))
     
 
         # draw the test player
