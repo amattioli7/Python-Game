@@ -3,6 +3,7 @@
 # imports
 import pygame
 import os
+from player import Player
 
 # setting up window
 WIDTH, HEIGHT = 1000, 1000
@@ -17,6 +18,8 @@ PLAYER_IMAGE = pygame.image.load(
     os.path.join('Assets', 'naruto.png')
 )
 PLAYER = pygame.transform.scale(PLAYER_IMAGE, (50, 50))
+
+P = Player(50, 50, PLAYER)
 
 # main function
 def main():
@@ -40,7 +43,7 @@ def main():
         WINDOW.fill((255, 255, 255))
 
         # draw the test player
-        WINDOW.blit(PLAYER, (100, 100))
+        P.draw(WINDOW)
 
         # update the window
         pygame.display.update()
