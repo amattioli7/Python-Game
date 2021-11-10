@@ -64,6 +64,11 @@ TREE_IMAGE = pygame.image.load(
             ).convert_alpha()
 TREE = pygame.transform.scale(TREE_IMAGE, (64, 128))
 
+ROCK_IMAGE = pygame.image.load(
+                os.path.join('Assets', 'rock.png')
+            ).convert_alpha()
+ROCK = pygame.transform.scale(ROCK_IMAGE, (32, 32))
+
 # scroll dataclass
 @dataclass
 class Position:
@@ -105,8 +110,12 @@ def drawWorld(world, scroll):
 
                 # after this, draw everything else in the chunk!
                 #world.map[targetChunk].drawEntities(WINDOW)
-                for entity in world.map[targetChunk].trees:
-                    WINDOW.blit(TREE, (entity.x - scroll.x, entity.y - scroll.y))
+                for entity in world.map[targetChunk].entities:
+                    if entity.type == 0: #tree
+                        WINDOW.blit(TREE, (entity.x - scroll.x, entity.y - scroll.y))
+                    elif entity.type == 1: #rock
+                        WINDOW.blit(ROCK, (entity.x - scroll.x, entity.y - scroll.y))
+
 
 
 # main function

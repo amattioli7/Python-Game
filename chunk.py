@@ -25,7 +25,7 @@ class Chunk:
         self.x = x
         self.y = y
         self.tiles = []
-        self.trees = []
+        self.entities = []
 
 
     # getXCoord function to return tiles x coord
@@ -47,7 +47,7 @@ class Chunk:
         for yPos in range(10):
             for xPos in range(10):
 
-                # setting x and y of chunk
+                # setting x and y of tile
                 targetX = self.x + (xPos*32)
                 targetY = self.y + (yPos*32)
 
@@ -62,8 +62,10 @@ class Chunk:
                 else:
                     # maybe generate a tree
                     chance = random.randint(0, 10)
-                    if chance == 1 and targetX < (self.x + 272):
-                        self.trees.append(Entity(targetX-16, targetY-112, 0))
+                    if chance == 0 and targetX < (self.x + 272):
+                        self.entities.append(Entity(targetX-16, targetY-112, 0))
+                    elif chance == 1:
+                        self.entities.append(Entity(targetX, targetY, 1))
 
                 # now make the tile with the x and y
                 t = Tile(targetX, targetY, type)
