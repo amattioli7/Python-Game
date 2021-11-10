@@ -58,21 +58,33 @@ class Position:
 
 scroll = Position()
 
-# drawWorld function
+# drawWorld function (only draw chunks near character!)
 def drawWorld(world, scroll):
 
-    # loop through the list of tiles and draw each one
-    for chunk in world.map:
-        for tile in world.map[chunk].tiles:
-            #draw it
-            if tile.type == 0: # grass
-                WINDOW.blit(GRASS, (tile.x - scroll.x, tile.y - scroll.y))
+    for y in range(11):
+        for x in range(11):
+            targetX = (x*100) + (int(scroll.x/100) * 100)
+            targetY = (y*100) + (int(scroll.y/100) * 100)
 
-            elif tile.type == 1: # water
-                WINDOW.blit(WATER, (tile.x - scroll.x, tile.y - scroll.y))
-            else: # sand
-                WINDOW.blit(SAND, (tile.x - scroll.x, tile.y - scroll.y))
+            # making sure we don't render chunks that don't exist
+            if targetX < 2000 and targetY < 2000:
 
+                targetChunk = str(targetX) + ',' + str(targetY)
+                #print("Chunk: " + targetChunk)
+
+                # here, we can generate new chunks if we want to have infinite world
+                #TODO
+
+                # now, draw the tiles close to the player!
+                for tile in world.map[targetChunk].tiles:
+                    #draw it
+                    if tile.type == 0: # grass
+                        WINDOW.blit(GRASS, (tile.x - scroll.x, tile.y - scroll.y))
+
+                    elif tile.type == 1: # water
+                        WINDOW.blit(WATER, (tile.x - scroll.x, tile.y - scroll.y))
+                    else: # sand
+                        WINDOW.blit(SAND, (tile.x - scroll.x, tile.y - scroll.y))
 
 # main function
 def main():
