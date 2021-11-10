@@ -73,9 +73,4 @@ class Chunk:
                 # add the tile to the chunks list of tiles
                 self.tiles.append(t)
 
-    # drawEntities function that draws rocks, trees, etc...
-    def drawEntities(self, window):
-        print("hey")
-
-
     

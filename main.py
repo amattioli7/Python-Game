@@ -38,7 +38,7 @@ ENEMY = pygame.transform.scale(ENEMY_IMAGE, (50, 50))
 # create the enemy object
 E = Enemy(300, 300, ENEMY)
 
-# load in the tile images
+# load in the tile images ------------------------------------------------------------
 GRASS_IMAGE = pygame.image.load(
                 os.path.join('Assets', 'grass.png')
             ).convert()
@@ -69,7 +69,7 @@ ROCK_IMAGE = pygame.image.load(
             ).convert_alpha()
 ROCK = pygame.transform.scale(ROCK_IMAGE, (32, 32))
 
-# scroll dataclass
+# scroll dataclass ---------------------------------------------------------------------
 @dataclass
 class Position:
     x = 0
@@ -89,6 +89,8 @@ def drawWorld(world, scroll):
 
             # making sure we don't render chunks that don't exist
             if targetX < (CHUNK_SIZE*world.xChunks) and targetY < (CHUNK_SIZE*world.yChunks):
+
+                #here, we could call a function to check collisions of chunk entities (trees, rocks, etc)
 
                 targetChunk = str(targetX) + ',' + str(targetY)
                 #print("Chunk: " + targetChunk)
@@ -156,7 +158,8 @@ def main():
         clock.tick(FPS)
 
         # check each pygame event
-        for event in pygame.event.get():
+        eventList = pygame.event.get()
+        for event in eventList:
             if event.type == pygame.QUIT:
                 running = False
 
