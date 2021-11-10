@@ -53,11 +53,5 @@ class Chunk:
                 #print(targetX, targetY, randomNum)
                 self.tiles.append(t)
 
-    # drawChunk function that draws the chunks
-    def drawChunk(self, window):
-        # loop through the list of tiles and draw each one
-        for tile in self.tiles:
-            tile.drawTile(window)
-
 
     

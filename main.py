@@ -33,6 +33,37 @@ ENEMY = pygame.transform.scale(ENEMY_IMAGE, (50, 50))
 # create the enemy object
 E = Enemy(300, 300, ENEMY)
 
+# load in the tile images
+GRASS_IMAGE = pygame.image.load(
+                os.path.join('Assets', 'grass.png')
+            ).convert()
+GRASS = pygame.transform.scale(GRASS_IMAGE, (10, 10))
+
+WATER_IMAGE = pygame.image.load(
+                os.path.join('Assets', 'water.png')
+            ).convert()
+WATER = pygame.transform.scale(WATER_IMAGE, (10, 10))
+
+SAND_IMAGE = pygame.image.load(
+                os.path.join('Assets', 'sand.png')
+            ).convert()
+SAND = pygame.transform.scale(SAND_IMAGE, (10, 10))
+
+# drawWorld function
+def drawWorld(world):
+        # loop through the list of tiles and draw each one
+        for chunk in world.map:
+            for tile in world.map[chunk].tiles:
+                #draw it
+                if tile.type == 0:
+                    WINDOW.blit(GRASS, (tile.x, tile.y))
+
+                elif tile.type == 1:
+                    WINDOW.blit(WATER, (tile.x, tile.y))
+                else:
+                    WINDOW.blit(SAND, (tile.x, tile.y))
+
+
 # main function
 def main():
 
@@ -41,9 +72,6 @@ def main():
 
     # generate the map
     W.createWorld()
-
-    # draw the map
-    W.drawWorld(WINDOW)
 
     # set up clock variable
     clock = pygame.time.Clock()
@@ -61,7 +89,9 @@ def main():
                 running = False
 
         # fill the window with white fill
-        WINDOW.fill((255, 255, 255))
+        #WINDOW.fill((255, 255, 255))
+        # draw the map
+        drawWorld(W)
 
         # handle the players movement based on WASD
         P.handlePlayerMovement()

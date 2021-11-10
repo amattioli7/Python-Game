@@ -10,6 +10,9 @@ class World:
     def __init__(self):
         self.map = {}
 
+    def getMap(self):
+        return self.map
+
 
     # ideas
     """
@@ -35,9 +38,4 @@ class World:
                 c.generateChunk()
                 
                 self.map[str(targetX) + ',' + str(targetY)] = c
-
-    def drawWorld(self, window):
-        for key in self.map:
-            #for each key (chunk) in the map (this will be changed), draw the chunk
-            self.map[key].drawChunk(window)
 
