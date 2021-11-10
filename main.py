@@ -51,16 +51,17 @@ SAND = pygame.transform.scale(SAND_IMAGE, (10, 10))
 
 # drawWorld function
 def drawWorld(world):
+
         # loop through the list of tiles and draw each one
         for chunk in world.map:
             for tile in world.map[chunk].tiles:
                 #draw it
-                if tile.type == 0:
+                if tile.type == 0: # grass
                     WINDOW.blit(GRASS, (tile.x, tile.y))
 
-                elif tile.type == 1:
+                elif tile.type == 1: # water
                     WINDOW.blit(WATER, (tile.x, tile.y))
-                else:
+                else: # sand
                     WINDOW.blit(SAND, (tile.x, tile.y))
 
 
@@ -88,8 +89,6 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
 
-        # fill the window with white fill
-        #WINDOW.fill((255, 255, 255))
         # draw the map
         drawWorld(W)
 

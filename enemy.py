@@ -15,6 +15,7 @@ class Enemy:
     def draw(self, window):
         window.blit(self.image, (self.x, self.y))
 
+    # move function to make the enemy follow the player
     def move(self, player):
 
         x = 0

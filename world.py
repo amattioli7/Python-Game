@@ -10,10 +10,6 @@ class World:
     def __init__(self):
         self.map = {}
 
-    def getMap(self):
-        return self.map
-
-
     # ideas
     """
         Most likely, there will have to be a function to draw chunks in proximity to player
@@ -26,6 +22,8 @@ class World:
 
     # createWorld function creates the world by generating chunks and adding them to the world dictionary
     def createWorld(self):
+
+        # loop through to create 100 chunks (for now)
         for yPos in range(10):
             for xPos in range(10):
                 targetX = xPos*100

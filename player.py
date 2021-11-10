@@ -11,10 +11,11 @@ class Player:
         self.y = y
         self.image = image
 
-    # draw function to draw player (currently image based)
+    # draw function to draw player
     def draw(self, window):
         window.blit(self.image, (self.x, self.y))
 
+    # handlePlayerMovement function to handle movement keypresses
     def handlePlayerMovement(self):
 
         # get the keys that are pressed

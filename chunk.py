@@ -39,18 +39,22 @@ class Chunk:
     # generateChunk function that generates 10x10 chunks
     def generateChunk(self):
 
-        #print('Chunk: ' + str(x) + ',' + str(y) + '-----------------------------------------------------')
+        # loop to generate 100 tiles per chunk
         for yPos in range(10):
             for xPos in range(10):
+
+                # setting x and y of chunk
                 targetX = self.x + (xPos*10)
                 targetY = self.y + (yPos*10)
+
                 # set tile type
                 # for now, lets do random between 3 types
                 randomNum = random.randint(0, 2)
 
                 # now make the tile with the x and y
                 t = Tile(targetX, targetY, randomNum)
-                #print(targetX, targetY, randomNum)
+            
+                # add the tile to the chunks list of tiles
                 self.tiles.append(t)
 
 
