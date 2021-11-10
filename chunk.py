@@ -15,6 +15,7 @@ So, we should be able to load in all of the chunks within a certain range of the
 import pygame
 import random
 from tile import Tile
+import noise
 
 class Chunk:
 
@@ -44,15 +45,20 @@ class Chunk:
             for xPos in range(10):
 
                 # setting x and y of chunk
-                targetX = self.x + (xPos*10)
-                targetY = self.y + (yPos*10)
+                targetX = self.x + (xPos*32)
+                targetY = self.y + (yPos*32)
 
-                # set tile type
-                # for now, lets do random between 3 types
-                randomNum = random.randint(0, 2)
+                type = 0
+                n = noise.pnoise2(float(targetX)/2000, float(targetY)/2000, octaves=2, lacunarity=2, persistence=0.5)
+                #print(n)
+
+                if n < -0.21:
+                    type = 1 #water
+                elif n < -0.18:
+                    type = 2 #sand
 
                 # now make the tile with the x and y
-                t = Tile(targetX, targetY, randomNum)
+                t = Tile(targetX, targetY, type)
             
                 # add the tile to the chunks list of tiles
                 self.tiles.append(t)

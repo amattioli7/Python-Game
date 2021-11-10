@@ -9,9 +9,12 @@ from world import World
 from dataclasses import dataclass
 
 # setting up window
-WIDTH, HEIGHT = 1000, 1000
+WIDTH, HEIGHT = 1600, 960
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Python Game")
+
+# setting chunk size constant
+CHUNK_SIZE = 320
 
 # setting hardcoded fps
 FPS = 60
@@ -38,17 +41,17 @@ E = Enemy(300, 300, ENEMY)
 GRASS_IMAGE = pygame.image.load(
                 os.path.join('Assets', 'grass.png')
             ).convert()
-GRASS = pygame.transform.scale(GRASS_IMAGE, (10, 10))
+GRASS = pygame.transform.scale(GRASS_IMAGE, (32, 32))
 
 WATER_IMAGE = pygame.image.load(
                 os.path.join('Assets', 'water.png')
             ).convert()
-WATER = pygame.transform.scale(WATER_IMAGE, (10, 10))
+WATER = pygame.transform.scale(WATER_IMAGE, (32, 32))
 
 SAND_IMAGE = pygame.image.load(
                 os.path.join('Assets', 'sand.png')
             ).convert()
-SAND = pygame.transform.scale(SAND_IMAGE, (10, 10))
+SAND = pygame.transform.scale(SAND_IMAGE, (32, 32))
 
 # scroll dataclass
 @dataclass
@@ -61,13 +64,15 @@ scroll = Position()
 # drawWorld function (only draw chunks near character!)
 def drawWorld(world, scroll):
 
-    for y in range(11):
-        for x in range(11):
-            targetX = (x*100) + (int(scroll.x/100) * 100)
-            targetY = (y*100) + (int(scroll.y/100) * 100)
+    # (HEIGHT/CHUNK_SIZE) + 1
+    for y in range(4):
+        # (WIDTH/CHUNK_SIZE) + 1
+        for x in range(6):
+            targetX = (x*CHUNK_SIZE) + (int(scroll.x/CHUNK_SIZE) * CHUNK_SIZE)
+            targetY = (y*CHUNK_SIZE) + (int(scroll.y/CHUNK_SIZE) * CHUNK_SIZE)
 
             # making sure we don't render chunks that don't exist
-            if targetX < 2000 and targetY < 2000:
+            if targetX < (CHUNK_SIZE*world.xChunks) and targetY < (CHUNK_SIZE*world.yChunks):
 
                 targetChunk = str(targetX) + ',' + str(targetY)
                 #print("Chunk: " + targetChunk)
@@ -89,11 +94,15 @@ def drawWorld(world, scroll):
 # main function
 def main():
 
-    # create the world (20x20 chunks, so 2000x2000 pixels)
-    W = World(20, 20)
+    # create the world (20x20 chunks)
+    W = World(20, 20, CHUNK_SIZE)
 
     # generate the map
     W.createWorld()
+
+    # set up some variables
+    xBorder = (CHUNK_SIZE*W.xChunks)-WIDTH
+    yBorder = (CHUNK_SIZE*W.yChunks)-HEIGHT
 
     # set up clock variable
     clock = pygame.time.Clock()
@@ -103,18 +112,18 @@ def main():
     while running:
 
         # set camera scroll values
-        scroll.x += (P.x - scroll.x - 500)/20
-        scroll.y += (P.y - scroll.y - 500)/20
+        scroll.x += (P.x - scroll.x - (WIDTH/2))/20
+        scroll.y += (P.y - scroll.y - (HEIGHT/2))/20
 
         # make sure scroll doesnt go outside of boundaries
         if scroll.x < 0:
             scroll.x = 0
-        elif scroll.x > 1000:
-            scroll.x = 1000
+        elif scroll.x > xBorder:
+            scroll.x = xBorder
         if scroll.y < 0:
             scroll.y = 0
-        elif scroll.y > 1000:
-            scroll.y = 1000
+        elif scroll.y > yBorder:
+            scroll.y = yBorder
         
         # cap the fps to 60
         clock.tick(FPS)

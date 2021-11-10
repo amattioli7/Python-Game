@@ -7,10 +7,11 @@ from chunk import Chunk
 class World:
 
     # constructor for World object
-    def __init__(self, xChunks, yChunks):
+    def __init__(self, xChunks, yChunks, chunkSize):
         self.map = {}
         self.xChunks = xChunks
         self.yChunks = yChunks
+        self.chunkSize = chunkSize
 
     # ideas
     """
@@ -30,8 +31,8 @@ class World:
         for yPos in range(self.yChunks):
             for xPos in range(self.xChunks):
                 
-                targetX = xPos*100
-                targetY = yPos*100
+                targetX = xPos*self.chunkSize
+                targetY = yPos*self.chunkSize
                 
                 # make the new chunk
                 c = Chunk(targetX, targetY)
