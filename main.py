@@ -7,6 +7,7 @@ from player import Player
 from enemy import Enemy
 from world import World
 from dataclasses import dataclass
+import random
 
 # setting up window
 WIDTH, HEIGHT = 1600, 960
@@ -48,11 +49,6 @@ DGRASS_IMAGE = pygame.image.load(
             ).convert()
 DGRASS = pygame.transform.scale(DGRASS_IMAGE, (32, 32))
 
-TREE_IMAGE = pygame.image.load(
-                os.path.join('Assets', 'tree.png')
-            ).convert_alpha()
-TREE = pygame.transform.scale(TREE_IMAGE, (64, 128))
-
 WATER_IMAGE = pygame.image.load(
                 os.path.join('Assets', 'water.png')
             ).convert()
@@ -62,6 +58,11 @@ SAND_IMAGE = pygame.image.load(
                 os.path.join('Assets', 'sand.png')
             ).convert()
 SAND = pygame.transform.scale(SAND_IMAGE, (32, 32))
+
+TREE_IMAGE = pygame.image.load(
+                os.path.join('Assets', 'tree.png')
+            ).convert_alpha()
+TREE = pygame.transform.scale(TREE_IMAGE, (64, 128))
 
 # scroll dataclass
 @dataclass
@@ -75,9 +76,9 @@ scroll = Position()
 def drawWorld(world, scroll):
 
     # (HEIGHT/CHUNK_SIZE) + 1
-    for y in range(4):
+    for y in range(5):
         # (WIDTH/CHUNK_SIZE) + 1
-        for x in range(6):
+        for x in range(7):
             targetX = (x*CHUNK_SIZE) + (int(scroll.x/CHUNK_SIZE) * CHUNK_SIZE)
             targetY = (y*CHUNK_SIZE) + (int(scroll.y/CHUNK_SIZE) * CHUNK_SIZE)
 
@@ -101,8 +102,11 @@ def drawWorld(world, scroll):
                         WINDOW.blit(SAND, (tile.x - scroll.x, tile.y - scroll.y))
                     else: # dark grass
                         WINDOW.blit(DGRASS, (tile.x - scroll.x, tile.y - scroll.y))
-                        #we should also try to draw trees on these coords
-                        WINDOW.blit(TREE, (tile.x - scroll.x, tile.y - scroll.y))
+
+                # after this, draw everything else in the chunk!
+                #world.map[targetChunk].drawEntities(WINDOW)
+                for entity in world.map[targetChunk].trees:
+                    WINDOW.blit(TREE, (entity.x - scroll.x, entity.y - scroll.y))
 
 
 # main function

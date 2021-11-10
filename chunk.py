@@ -13,9 +13,10 @@ So, we should be able to load in all of the chunks within a certain range of the
 
 # imports
 import pygame
-import random
 from tile import Tile
+from entity import Entity
 import noise
+import random
 
 class Chunk:
 
@@ -24,6 +25,8 @@ class Chunk:
         self.x = x
         self.y = y
         self.tiles = []
+        self.trees = []
+
 
     # getXCoord function to return tiles x coord
     def getXCoord(self):
@@ -52,18 +55,25 @@ class Chunk:
                 n = noise.pnoise2(float(targetX)/2000, float(targetY)/2000, octaves=2, lacunarity=2, persistence=0.5)
                 #print(n)
 
-                if n > 0.1:
-                    type = 3 #dark grass
-                elif n < -0.21:
+                if n < -0.21:
                     type = 1 #water
                 elif n < -0.18:
                     type = 2 #sand
+                else:
+                    # maybe generate a tree
+                    chance = random.randint(0, 10)
+                    if chance == 1 and targetX < (self.x + 272):
+                        self.trees.append(Entity(targetX-16, targetY-112, 0))
 
                 # now make the tile with the x and y
                 t = Tile(targetX, targetY, type)
             
                 # add the tile to the chunks list of tiles
                 self.tiles.append(t)
+
+    # drawEntities function that draws rocks, trees, etc...
+    def drawEntities(self, window):
+        print("hey")
 
 
     
