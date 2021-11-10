@@ -52,7 +52,9 @@ class Chunk:
                 n = noise.pnoise2(float(targetX)/2000, float(targetY)/2000, octaves=2, lacunarity=2, persistence=0.5)
                 #print(n)
 
-                if n < -0.21:
+                if n > 0.1:
+                    type = 3 #dark grass
+                elif n < -0.21:
                     type = 1 #water
                 elif n < -0.18:
                     type = 2 #sand

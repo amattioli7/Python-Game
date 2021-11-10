@@ -43,6 +43,16 @@ GRASS_IMAGE = pygame.image.load(
             ).convert()
 GRASS = pygame.transform.scale(GRASS_IMAGE, (32, 32))
 
+DGRASS_IMAGE = pygame.image.load(
+                os.path.join('Assets', 'dgrass.png')
+            ).convert()
+DGRASS = pygame.transform.scale(DGRASS_IMAGE, (32, 32))
+
+TREE_IMAGE = pygame.image.load(
+                os.path.join('Assets', 'tree.png')
+            ).convert_alpha()
+TREE = pygame.transform.scale(TREE_IMAGE, (64, 128))
+
 WATER_IMAGE = pygame.image.load(
                 os.path.join('Assets', 'water.png')
             ).convert()
@@ -85,11 +95,15 @@ def drawWorld(world, scroll):
                     #draw it
                     if tile.type == 0: # grass
                         WINDOW.blit(GRASS, (tile.x - scroll.x, tile.y - scroll.y))
-
                     elif tile.type == 1: # water
                         WINDOW.blit(WATER, (tile.x - scroll.x, tile.y - scroll.y))
-                    else: # sand
+                    elif tile.type == 2: # sand
                         WINDOW.blit(SAND, (tile.x - scroll.x, tile.y - scroll.y))
+                    else: # dark grass
+                        WINDOW.blit(DGRASS, (tile.x - scroll.x, tile.y - scroll.y))
+                        #we should also try to draw trees on these coords
+                        WINDOW.blit(TREE, (tile.x - scroll.x, tile.y - scroll.y))
+
 
 # main function
 def main():
