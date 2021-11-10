@@ -77,7 +77,7 @@ def drawWorld(world, scroll):
 # main function
 def main():
 
-    # create the world
+    # create the world (20x20 chunks, so 2000x2000 pixels)
     W = World(20, 20)
 
     # generate the map
@@ -93,6 +93,16 @@ def main():
         # set camera scroll values
         scroll.x += (P.x - scroll.x - 500)/20
         scroll.y += (P.y - scroll.y - 500)/20
+
+        # make sure scroll doesnt go outside of boundaries
+        if scroll.x < 0:
+            scroll.x = 0
+        elif scroll.x > 1000:
+            scroll.x = 1000
+        if scroll.y < 0:
+            scroll.y = 0
+        elif scroll.y > 1000:
+            scroll.y = 1000
         
         # cap the fps to 60
         clock.tick(FPS)
