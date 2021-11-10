@@ -78,7 +78,7 @@ def drawWorld(world, scroll):
 def main():
 
     # create the world
-    W = World()
+    W = World(20, 20)
 
     # generate the map
     W.createWorld()

@@ -7,8 +7,10 @@ from chunk import Chunk
 class World:
 
     # constructor for World object
-    def __init__(self):
+    def __init__(self, xChunks, yChunks):
         self.map = {}
+        self.xChunks = xChunks
+        self.yChunks = yChunks
 
     # ideas
     """
@@ -23,10 +25,10 @@ class World:
     # createWorld function creates the world by generating chunks and adding them to the world dictionary
     def createWorld(self):
 
-        # loop through to create 200 chunks (for now)
+        # loop through pre-defined chunk sizes and create the world chunk by chunk
         
-        for yPos in range(20):
-            for xPos in range(20):
+        for yPos in range(self.yChunks):
+            for xPos in range(self.xChunks):
                 
                 targetX = xPos*100
                 targetY = yPos*100
