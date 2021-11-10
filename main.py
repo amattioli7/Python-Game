@@ -23,7 +23,7 @@ PLAYER_IMAGE = pygame.image.load(
 PLAYER = pygame.transform.scale(PLAYER_IMAGE, (50, 50))
 
 # create the player object
-P = Player(50, 50, PLAYER)
+P = Player(500, 500, PLAYER)
 
 # test enemy image
 ENEMY_IMAGE = pygame.image.load(

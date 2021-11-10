@@ -23,9 +23,11 @@ class World:
     # createWorld function creates the world by generating chunks and adding them to the world dictionary
     def createWorld(self):
 
-        # loop through to create 100 chunks (for now)
-        for yPos in range(10):
-            for xPos in range(10):
+        # loop through to create 200 chunks (for now)
+        
+        for yPos in range(20):
+            for xPos in range(20):
+                
                 targetX = xPos*100
                 targetY = yPos*100
                 
