@@ -90,8 +90,10 @@ def main():
     running = True
     while running:
 
-        scroll.x += 1
-
+        # set camera scroll values
+        scroll.x += (P.x - scroll.x - 500)/20
+        scroll.y += (P.y - scroll.y - 500)/20
+        
         # cap the fps to 60
         clock.tick(FPS)
 
