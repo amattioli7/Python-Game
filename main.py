@@ -6,6 +6,7 @@ import os
 from player import Player
 from enemy import Enemy
 from world import World
+from dataclasses import dataclass
 
 # setting up window
 WIDTH, HEIGHT = 1000, 1000
@@ -49,20 +50,28 @@ SAND_IMAGE = pygame.image.load(
             ).convert()
 SAND = pygame.transform.scale(SAND_IMAGE, (10, 10))
 
+# scroll dataclass
+@dataclass
+class Position:
+    x = 0
+    y = 0
+
+scroll = Position()
+
 # drawWorld function
-def drawWorld(world):
+def drawWorld(world, scroll):
 
-        # loop through the list of tiles and draw each one
-        for chunk in world.map:
-            for tile in world.map[chunk].tiles:
-                #draw it
-                if tile.type == 0: # grass
-                    WINDOW.blit(GRASS, (tile.x, tile.y))
+    # loop through the list of tiles and draw each one
+    for chunk in world.map:
+        for tile in world.map[chunk].tiles:
+            #draw it
+            if tile.type == 0: # grass
+                WINDOW.blit(GRASS, (tile.x - scroll.x, tile.y - scroll.y))
 
-                elif tile.type == 1: # water
-                    WINDOW.blit(WATER, (tile.x, tile.y))
-                else: # sand
-                    WINDOW.blit(SAND, (tile.x, tile.y))
+            elif tile.type == 1: # water
+                WINDOW.blit(WATER, (tile.x - scroll.x, tile.y - scroll.y))
+            else: # sand
+                WINDOW.blit(SAND, (tile.x - scroll.x, tile.y - scroll.y))
 
 
 # main function
@@ -81,6 +90,8 @@ def main():
     running = True
     while running:
 
+        scroll.x += 1
+
         # cap the fps to 60
         clock.tick(FPS)
 
@@ -90,7 +101,7 @@ def main():
                 running = False
 
         # draw the map
-        drawWorld(W)
+        drawWorld(W, scroll)
 
         # handle the players movement based on WASD
         P.handlePlayerMovement()
@@ -99,10 +110,10 @@ def main():
         E.move(P)
 
         # draw the test player
-        P.draw(WINDOW)
+        P.draw(WINDOW, scroll)
 
         # draw the test enemy
-        E.draw(WINDOW)
+        E.draw(WINDOW, scroll)
 
         # update the window
         pygame.display.update()

@@ -12,8 +12,8 @@ class Player:
         self.image = image
 
     # draw function to draw player
-    def draw(self, window):
-        window.blit(self.image, (self.x, self.y))
+    def draw(self, window, scroll):
+        window.blit(self.image, (self.x -scroll.x, self.y - scroll.y))
 
     # handlePlayerMovement function to handle movement keypresses
     def handlePlayerMovement(self):
