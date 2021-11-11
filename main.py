@@ -147,7 +147,7 @@ def drawMobs(player, world, scroll, clickEventPos):
 
 
                     if world.map[targetChunk].hitbox.collidepoint(mobCoords) is False:
-                        print("exited chunk")
+                        #print("exited chunk")
 
                         #get coords of old chunk
                         chunkX = world.map[targetChunk].x

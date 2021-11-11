@@ -47,9 +47,6 @@ class Chunk:
     # generateChunk function that generates 10x10 chunks
     def generateChunk(self):
 
-        if self.x == 640 and self.y == 640:
-            self.mobs.append(Enemy(700, 700, 0))
-
         # loop to generate 100 tiles per chunk
         for yPos in range(10):
             for xPos in range(10):
@@ -75,11 +72,9 @@ class Chunk:
                         self.entities.append(Entity(targetX, targetY, 32, 32, 1))
 
                 # random chance to spawn an enemy
-                #chance = random.randint(0, 1000)
-                #if chance == 0:
-
-                #for now, test with one mob to make it easier
-    
+                chance = random.randint(0, 250)
+                if chance == 0:
+                    self.mobs.append(Enemy(targetX, targetY, 0))
 
                 # now make the tile with the x and y
                 t = Tile(targetX, targetY, type)
