@@ -63,14 +63,21 @@ class Chunk:
                     # maybe generate a tree
                     chance = random.randint(0, 10)
                     if chance == 0 and targetX < (self.x + 272):
-                        self.entities.append(Entity(targetX-16, targetY-112, 0))
+                        self.entities.append(Entity(targetX-16, targetY-112, 64, 128, 0))
                     elif chance == 1:
-                        self.entities.append(Entity(targetX, targetY, 1))
+                        self.entities.append(Entity(targetX, targetY, 32, 32, 1))
 
                 # now make the tile with the x and y
                 t = Tile(targetX, targetY, type)
             
                 # add the tile to the chunks list of tiles
                 self.tiles.append(t)
+
+    def entityClicked(self, mousePos):
+        for entity in self.entities:
+            #we clicked on the entity, so remove it
+            if entity.hitbox.collidepoint(mousePos):
+                self.entities.remove(entity)
+    
 
     

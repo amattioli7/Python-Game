@@ -78,7 +78,7 @@ class Position:
 scroll = Position()
 
 # drawWorld function (only draw chunks near character!)
-def drawWorld(world, scroll):
+def drawWorld(world, scroll, clickEventPos):
 
     # (HEIGHT/CHUNK_SIZE) + 1
     for y in range(5):
@@ -90,10 +90,13 @@ def drawWorld(world, scroll):
             # making sure we don't render chunks that don't exist
             if targetX < (CHUNK_SIZE*world.xChunks) and targetY < (CHUNK_SIZE*world.yChunks):
 
-                #here, we could call a function to check collisions of chunk entities (trees, rocks, etc)
-
+                # make the key for the map dict
                 targetChunk = str(targetX) + ',' + str(targetY)
-                #print("Chunk: " + targetChunk)
+                
+                #now, check collisions of chunk entities (trees, rocks, etc)
+                if clickEventPos is not None:
+                    adjustedCoords = (clickEventPos[0] + scroll.x, clickEventPos[1] + scroll.y)
+                    world.map[targetChunk].entityClicked(adjustedCoords)
 
                 # here, we can generate new chunks if we want to have infinite world
                 #TODO
@@ -117,8 +120,6 @@ def drawWorld(world, scroll):
                         WINDOW.blit(TREE, (entity.x - scroll.x, entity.y - scroll.y))
                     elif entity.type == 1: #rock
                         WINDOW.blit(ROCK, (entity.x - scroll.x, entity.y - scroll.y))
-
-
 
 # main function
 def main():
@@ -145,6 +146,7 @@ def main():
         scroll.y += (P.y - scroll.y - (HEIGHT/2))/20
 
         # make sure scroll doesnt go outside of boundaries
+        
         if scroll.x < 0:
             scroll.x = 0
         elif scroll.x > xBorder:
@@ -154,17 +156,24 @@ def main():
         elif scroll.y > yBorder:
             scroll.y = yBorder
         
+
+        #print("X: " + str(scroll.x))
+        #print("Y: " + str(scroll.y))
+        
         # cap the fps to 60
         clock.tick(FPS)
 
         # check each pygame event
         eventList = pygame.event.get()
+        clickEventPos = None
         for event in eventList:
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                clickEventPos = pygame.mouse.get_pos()
 
         # draw the map
-        drawWorld(W, scroll)
+        drawWorld(W, scroll, clickEventPos)
 
         # handle the players movement based on WASD
         P.handlePlayerMovement()

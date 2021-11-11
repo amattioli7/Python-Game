@@ -7,10 +7,13 @@ import os
 class Entity:
 
     # constructor for Entity object
-    def __init__(self, x, y, type):
+    def __init__(self, x, y, width, height, type):
         self.x = x
         self.y = y
+        self.width = width
+        self.height = height
         self.type = type
+        self.hitbox = pygame.Rect(self.x, self.y, self.width, self.height)
 
     # getXCoord function to return entity x coord
     def getXCoord(self):
@@ -21,5 +24,5 @@ class Entity:
         return self.y
 
     # getType function to return entity type
-    def getYCoord(self):
+    def getType(self):
         return self.type
