@@ -32,6 +32,13 @@ class Chunk:
         self.entities = []
         self.mobs = []
 
+        #we can have a flag or bool to show if this chunk is loaded
+        #this could be useful for determining whether a chunk that is being loaded in should have a chance for enemies to spawn
+        #aka if the spawning occurs when a new chunk is loaded in
+        #we will also need a way to deload chunks though
+
+        #or, we just consider spawning enemies on the edge chunks (the ones that are being rendered but that the player cannot see)
+
     # getXCoord function to return tiles x coord
     def getXCoord(self):
         return self.x

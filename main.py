@@ -120,6 +120,9 @@ def drawWorld(player, world, scroll, clickEventPos):
 
 def drawMobs(player, world, scroll, clickEventPos):
 
+    #we can also change this function to draw the entities as well, so we can have the players and things drawn
+    #on top of the world tiles but behind the entities
+
     # (HEIGHT/CHUNK_SIZE) + 1
     for y in range(5):
         # (WIDTH/CHUNK_SIZE) + 1
