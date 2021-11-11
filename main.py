@@ -121,6 +121,59 @@ def drawWorld(player, world, scroll, clickEventPos):
                     elif entity.type == 1: #rock
                         WINDOW.blit(ROCK, (entity.x - scroll.x, entity.y - scroll.y))
 
+def drawMobs(player, world, scroll, clickEventPos):
+
+    # (HEIGHT/CHUNK_SIZE) + 1
+    for y in range(5):
+        # (WIDTH/CHUNK_SIZE) + 1
+        for x in range(7):
+            targetX = (x*CHUNK_SIZE) + (int(scroll.x/CHUNK_SIZE) * CHUNK_SIZE)
+            targetY = (y*CHUNK_SIZE) + (int(scroll.y/CHUNK_SIZE) * CHUNK_SIZE)
+
+            # making sure we don't render chunks that don't exist
+            if targetX < (CHUNK_SIZE*world.xChunks) and targetY < (CHUNK_SIZE*world.yChunks):
+
+                # make the key for the map dict
+                targetChunk = str(targetX) + ',' + str(targetY)
+
+                # now, draw the mobs
+                for mob in world.map[targetChunk].mobs:
+
+                    #update mob position
+                    mob.move(player)
+
+                    #must check if it moved out of chunk (we have to put it in new chunk
+                    mobCoords = (mob.x, mob.y)
+
+
+                    if world.map[targetChunk].hitbox.collidepoint(mobCoords) is False:
+                        print("exited chunk")
+
+                        #get coords of old chunk
+                        chunkX = world.map[targetChunk].x
+                        chunkY = world.map[targetChunk].y
+                        #figure out which direction the enemy went
+                        if mob.x < chunkX: # mob went left
+                            # move mob into new chunk
+                            world.map[str(chunkX-320) + ',' + str(chunkY)].mobs.append(mob)
+                        elif mob.x >= (chunkX+320): # mob went right
+                            # move mob into new chunk
+                            world.map[str(chunkX+320) + ',' + str(chunkY)].mobs.append(mob)
+                        elif mob.y < chunkY: # mob went up
+                            # move mob into new chunk
+                            world.map[str(chunkX) + ',' + str(chunkY-320)].mobs.append(mob)
+                        elif mob.y >= (chunkY+320): # mob went down
+                            # move mob into new chunk
+                            world.map[str(chunkX) + ',' + str(chunkY+320)].mobs.append(mob)
+
+                        # remove mob from old chunk
+                        world.map[targetChunk].mobs.remove(mob)
+                        
+                    
+
+                    if mob.type == 0: #sasuke
+                        WINDOW.blit(ENEMY, (mob.x - scroll.x, mob.y - scroll.y))
+
 # main function
 def main():
 
@@ -174,18 +227,13 @@ def main():
 
         # draw the map
         drawWorld(P, W, scroll, clickEventPos)
+        drawMobs(P, W, scroll, clickEventPos)
 
         # handle the players movement based on WASD
         P.handlePlayerMovement()
 
-        # update the enemys movement
-        E.move(P)
-
         # draw the test player
         P.draw(WINDOW, scroll)
-
-        # draw the test enemy
-        E.draw(WINDOW, scroll)
 
         # update the window
         pygame.display.update()

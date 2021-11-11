@@ -6,14 +6,14 @@ import pygame
 class Enemy:
 
     # constructor for enemy object
-    def __init__(self, x, y, image):
+    def __init__(self, x, y, type):
         self.x = x
         self.y = y
-        self.image = image
+        self.type = type
 
     # draw function to draw enemy
-    def draw(self, window, scroll):
-        window.blit(self.image, (self.x - scroll.x, self.y - scroll.y))
+    def draw(self, window, image, scroll):
+        window.blit(image, (self.x - scroll.x, self.y - scroll.y))
 
     # move function to make the enemy follow the player
     def move(self, player):

@@ -15,18 +15,22 @@ So, we should be able to load in all of the chunks within a certain range of the
 import pygame
 from tile import Tile
 from entity import Entity
+from enemy import Enemy
 import noise
 import random
 
 class Chunk:
 
     # constructor for Chunk object
-    def __init__(self, x, y):
+    def __init__(self, x, y, width, height):
         self.x = x
         self.y = y
+        self.width = width
+        self.height = height
+        self.hitbox = pygame.Rect(self.x, self.y, self.width, self.height)
         self.tiles = []
         self.entities = []
-
+        self.mobs = []
 
     # getXCoord function to return tiles x coord
     def getXCoord(self):
@@ -42,6 +46,9 @@ class Chunk:
 
     # generateChunk function that generates 10x10 chunks
     def generateChunk(self):
+
+        if self.x == 640 and self.y == 640:
+            self.mobs.append(Enemy(700, 700, 0))
 
         # loop to generate 100 tiles per chunk
         for yPos in range(10):
@@ -67,6 +74,13 @@ class Chunk:
                     elif chance == 1:
                         self.entities.append(Entity(targetX, targetY, 32, 32, 1))
 
+                # random chance to spawn an enemy
+                #chance = random.randint(0, 1000)
+                #if chance == 0:
+
+                #for now, test with one mob to make it easier
+    
+
                 # now make the tile with the x and y
                 t = Tile(targetX, targetY, type)
             
@@ -86,11 +100,10 @@ class Chunk:
 def inRangeOfEntity(entityCenter, playerCenter):
     #calculate euclidean distance
     distance = ( ((entityCenter[0] - playerCenter[0])**2) + ((entityCenter[1] - playerCenter[1])**2) )**0.5
-    #print("Entity Center: " + str(entityCenter[0]) + ',' + str(entityCenter[1]))
-    #print("Player Center: " + str(playerCenter[0]) + ',' + str(playerCenter[1]))
-    #print("Distance: " + str(distance))
 
     #if the player is 75 pixels or less away from the entity (and this could be changed based on weapon equipped, etc...)
+    #or could be changed based on entity type
+
     if distance < 75:
         return True
     else:

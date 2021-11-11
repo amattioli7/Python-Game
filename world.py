@@ -35,7 +35,7 @@ class World:
                 targetY = yPos*self.chunkSize
                 
                 # make the new chunk
-                c = Chunk(targetX, targetY)
+                c = Chunk(targetX, targetY, 320, 320)
 
                 # generate the chunk
                 c.generateChunk()
