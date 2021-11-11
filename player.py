@@ -6,9 +6,13 @@ import pygame
 class Player:
 
     # constructor for player object
-    def __init__(self, x, y, image):
+    def __init__(self, x, y, width, height, image):
         self.x = x
         self.y = y
+        self.width = width
+        self.height = height
+        self.hitbox = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.center = (self.x + (self.width/2), self.y + (self.height/2))
         self.image = image
 
     # draw function to draw player
@@ -45,6 +49,9 @@ class Player:
     def updateLocation(self, x, y):
         self.x = x
         self.y = y
+        #recalculate center
+        self.center = (self.x + (self.width/2), self.y + (self.height/2))
+
 
     # getXCoord function to return players x coord
     def getXCoord(self):

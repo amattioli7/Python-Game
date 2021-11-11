@@ -14,6 +14,7 @@ class Entity:
         self.height = height
         self.type = type
         self.hitbox = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.center = (self.x + (self.width/2), self.y + (self.height/2))
 
     # getXCoord function to return entity x coord
     def getXCoord(self):

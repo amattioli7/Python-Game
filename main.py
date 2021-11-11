@@ -27,7 +27,7 @@ PLAYER_IMAGE = pygame.image.load(
 PLAYER = pygame.transform.scale(PLAYER_IMAGE, (50, 50))
 
 # create the player object
-P = Player(500, 500, PLAYER)
+P = Player(500, 500, 50, 50, PLAYER)
 
 # test enemy image
 ENEMY_IMAGE = pygame.image.load(
@@ -78,7 +78,7 @@ class Position:
 scroll = Position()
 
 # drawWorld function (only draw chunks near character!)
-def drawWorld(world, scroll, clickEventPos):
+def drawWorld(player, world, scroll, clickEventPos):
 
     # (HEIGHT/CHUNK_SIZE) + 1
     for y in range(5):
@@ -96,7 +96,7 @@ def drawWorld(world, scroll, clickEventPos):
                 #now, check collisions of chunk entities (trees, rocks, etc)
                 if clickEventPos is not None:
                     adjustedCoords = (clickEventPos[0] + scroll.x, clickEventPos[1] + scroll.y)
-                    world.map[targetChunk].entityClicked(adjustedCoords)
+                    world.map[targetChunk].entityClicked(adjustedCoords, player.center)
 
                 # here, we can generate new chunks if we want to have infinite world
                 #TODO
@@ -173,7 +173,7 @@ def main():
                 clickEventPos = pygame.mouse.get_pos()
 
         # draw the map
-        drawWorld(W, scroll, clickEventPos)
+        drawWorld(P, W, scroll, clickEventPos)
 
         # handle the players movement based on WASD
         P.handlePlayerMovement()

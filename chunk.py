@@ -73,11 +73,29 @@ class Chunk:
                 # add the tile to the chunks list of tiles
                 self.tiles.append(t)
 
-    def entityClicked(self, mousePos):
+    # entityClicked function to determine if an entity in the chunk was clicked
+    def entityClicked(self, mousePos, playerCenter):
         for entity in self.entities:
             #we clicked on the entity, so remove it
             if entity.hitbox.collidepoint(mousePos):
-                self.entities.remove(entity)
+                #make sure entity is in range of player
+                if inRangeOfEntity(entity.center, playerCenter):
+                    self.entities.remove(entity)
+
+# inRangeOfEntity helper function to determine whether the player is in range to hit an entity
+def inRangeOfEntity(entityCenter, playerCenter):
+    #calculate euclidean distance
+    distance = ( ((entityCenter[0] - playerCenter[0])**2) + ((entityCenter[1] - playerCenter[1])**2) )**0.5
+    #print("Entity Center: " + str(entityCenter[0]) + ',' + str(entityCenter[1]))
+    #print("Player Center: " + str(playerCenter[0]) + ',' + str(playerCenter[1]))
+    #print("Distance: " + str(distance))
+
+    #if the player is 75 pixels or less away from the entity (and this could be changed based on weapon equipped, etc...)
+    if distance < 75:
+        return True
+    else:
+        return False
+    
     
 
     
