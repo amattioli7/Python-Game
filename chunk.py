@@ -74,7 +74,7 @@ class Chunk:
                 # random chance to spawn an enemy
                 chance = random.randint(0, 250)
                 if chance == 0:
-                    self.mobs.append(Enemy(targetX, targetY, 0))
+                    self.mobs.append(Enemy(targetX, targetY, 50, 50, 0))
 
                 # now make the tile with the x and y
                 t = Tile(targetX, targetY, type)

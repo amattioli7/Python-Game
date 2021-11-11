@@ -35,9 +35,6 @@ ENEMY_IMAGE = pygame.image.load(
 )
 ENEMY = pygame.transform.scale(ENEMY_IMAGE, (50, 50))
 
-# create the enemy object
-E = Enemy(300, 300, ENEMY)
-
 # load in the tile images ------------------------------------------------------------
 GRASS_IMAGE = pygame.image.load(
                 os.path.join('Assets', 'grass.png')
