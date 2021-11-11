@@ -10,7 +10,7 @@ from dataclasses import dataclass
 import random
 
 # setting up window
-WIDTH, HEIGHT = 1600, 960
+WIDTH, HEIGHT = 1400, 760
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Python Game")
 
@@ -36,10 +36,9 @@ ENEMY_IMAGE = pygame.image.load(
 ENEMY = pygame.transform.scale(ENEMY_IMAGE, (50, 50))
 
 # load in the tile images ------------------------------------------------------------
-GRASS_IMAGE = pygame.image.load(
+GRASS = pygame.image.load(
                 os.path.join('Assets', 'grass.png')
             ).convert()
-GRASS = pygame.transform.scale(GRASS_IMAGE, (32, 32))
 
 DGRASS_IMAGE = pygame.image.load(
                 os.path.join('Assets', 'dgrass.png')
