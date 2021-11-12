@@ -223,8 +223,11 @@ def handleInventory(player):
                 #show the inventory
                 pygame.draw.rect(WINDOW, (255, 255, 255), background)
 
+                #make the font object
+                font = pygame.font.SysFont(None, 24)
+
                 for index, rect in enumerate(rectList):
-                    pygame.draw.rect(WINDOW, (0, 0, 0), rect)
+                    pygame.draw.rect(WINDOW, (0, 0, 0), rect) 
 
                     # get the inventory item
                     if index < len(player.inventory):
@@ -233,6 +236,11 @@ def handleInventory(player):
                         #check if item exists, if it does, draw it
                         if item is not None:
                             item.drawItemInventory(WINDOW, spriteHash, rect.x, rect.y)
+                            #also draw how many items is in the stack (maybe we can max it at 99?)
+                            numberOfItems = "x" + str(item.stackSize)
+                            text = font.render(numberOfItems, True, (255, 255, 255))
+                            WINDOW.blit(text, (rect.x + 20, rect.y + 20))
+
 
 
                 #print(P.inventory)
@@ -244,6 +252,9 @@ def handleInventory(player):
 
 # main function
 def main():
+
+    #init pygame
+    pygame.init()
 
     # create the world (20x20 chunks)
     W = World(20, 20, CHUNK_SIZE)
