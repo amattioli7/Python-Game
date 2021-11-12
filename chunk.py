@@ -111,10 +111,11 @@ class Chunk:
             #make sure item is in range of player
             if inRangeOfItem(item.center, player.center):
                 #add the item to the player inventory (if room!, for now don't check this)
-                player.inventory.append(item)
+                pickedUp = player.pickUp(item)
                 
-                #remove the item from the chunk
-                self.items.remove(item)
+                #remove the item from the chunk, if picked up
+                if pickedUp == True:
+                    self.items.remove(item)
 
 
 # inRangeOfEntity helper function to determine whether the player is in range to hit an entity
@@ -138,7 +139,7 @@ def inRangeOfItem(itemCenter, playerCenter):
     #if the player is 75 pixels or less away from the entity (and this could be changed based on weapon equipped, etc...)
     #or could be changed based on entity type
 
-    if distance < 5:
+    if distance < 25:
         return True
     else:
         return False

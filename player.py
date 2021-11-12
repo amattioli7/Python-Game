@@ -51,6 +51,23 @@ class Player:
         #recalculate center
         self.center = (self.x + (self.width/2), self.y + (self.height/2))
 
+    # pickUp function to pick up or leave an item if the inventory is full, returns true if picked up
+    def pickUp(self, item):
+
+        #check if inventory is empty
+        if len(self.inventory) != 0:
+            for held in self.inventory:
+                if item.type == held.type:
+                    #increase the stack size by 1
+                    held.stackSize += 1
+                    return True
+            return False
+        #add the item to the inventory
+        else:
+            self.inventory.append(item)
+            return True
+
+
 
     # getXCoord function to return players x coord
     def getXCoord(self):

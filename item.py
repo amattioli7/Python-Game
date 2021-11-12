@@ -21,3 +21,8 @@ class Item:
     def drawItem(self, window, scroll, spriteHash):
         if self.type == 0: # woodItem
             window.blit(spriteHash["woodItem"], (self.x - scroll.x, self.y - scroll.y))
+
+    # draws the current item (for inventory use)
+    def drawItemInventory(self, window, spriteHash, x, y):
+        if self.type == 0: # woodItem
+            window.blit(spriteHash["woodItem"], (x, y))

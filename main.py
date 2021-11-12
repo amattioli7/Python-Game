@@ -223,10 +223,19 @@ def handleInventory(player):
                 #show the inventory
                 pygame.draw.rect(WINDOW, (255, 255, 255), background)
 
-                for rect in rectList:
+                for index, rect in enumerate(rectList):
                     pygame.draw.rect(WINDOW, (0, 0, 0), rect)
 
+                    # get the inventory item
+                    if index < len(player.inventory):
+                        item = player.inventory[index]
 
+                        #check if item exists, if it does, draw it
+                        if item is not None:
+                            item.drawItemInventory(WINDOW, spriteHash, rect.x, rect.y)
+
+
+                #print(P.inventory)
                 # update the screen
                 pygame.display.update()
 
