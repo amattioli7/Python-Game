@@ -10,7 +10,7 @@ from dataclasses import dataclass
 import random
 
 # setting up window
-WIDTH, HEIGHT = 1400, 760
+WIDTH, HEIGHT = 1600, 960
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Python Game")
 
