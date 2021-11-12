@@ -37,40 +37,40 @@ ENEMY = pygame.transform.scale(ENEMY_IMAGE, (50, 50))
 
 # load in the tile images ------------------------------------------------------------
 # make a tile hashmap
-tileHash = {}
+spriteHash = {}
 GRASS = pygame.image.load(
                 os.path.join('Assets', 'grass.png')
             ).convert()
 
-tileHash["grass"] = GRASS
+spriteHash["grass"] = GRASS
 
 WATER_IMAGE = pygame.image.load(
                 os.path.join('Assets', 'water.png')
             ).convert()
 WATER = pygame.transform.scale(WATER_IMAGE, (32, 32))
 
-tileHash["water"] = WATER
+spriteHash["water"] = WATER
 
 SAND_IMAGE = pygame.image.load(
                 os.path.join('Assets', 'sand.png')
             ).convert()
 SAND = pygame.transform.scale(SAND_IMAGE, (32, 32))
 
-tileHash["sand"] = SAND
+spriteHash["sand"] = SAND
 
 TREE_IMAGE = pygame.image.load(
                 os.path.join('Assets', 'tree.png')
             ).convert_alpha()
 TREE = pygame.transform.scale(TREE_IMAGE, (64, 128))
 
-tileHash["tree"] = TREE
+spriteHash["tree"] = TREE
 
 ROCK_IMAGE = pygame.image.load(
                 os.path.join('Assets', 'rock.png')
             ).convert_alpha()
 ROCK = pygame.transform.scale(ROCK_IMAGE, (32, 32))
 
-tileHash["rock"] = ROCK
+spriteHash["rock"] = ROCK
 
 # scroll dataclass ---------------------------------------------------------------------
 @dataclass
@@ -107,15 +107,14 @@ def drawWorld(player, world, scroll, clickEventPos):
                 # now, draw the tiles close to the player!
                 for tile in world.map[targetChunk].tiles:
                     #draw it
-                    tile.drawTile(WINDOW, scroll, tileHash)
+                    tile.drawTile(WINDOW, scroll, spriteHash)
 
                 # after this, draw everything else in the chunk!
                 #world.map[targetChunk].drawEntities(WINDOW)
                 for entity in world.map[targetChunk].entities:
-                    if entity.type == 0: #tree
-                        WINDOW.blit(TREE, (entity.x - scroll.x, entity.y - scroll.y))
-                    elif entity.type == 1: #rock
-                        WINDOW.blit(ROCK, (entity.x - scroll.x, entity.y - scroll.y))
+                    #draw it
+                    entity.drawEntity(WINDOW, scroll, spriteHash)
+                    
 
 def drawMobs(player, world, scroll, clickEventPos):
 

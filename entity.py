@@ -27,3 +27,10 @@ class Entity:
     # getType function to return entity type
     def getType(self):
         return self.type
+
+    # draws the current entity
+    def drawEntity(self, window, scroll, spriteHash):
+        if self.type == 0: # tree
+            window.blit(spriteHash["tree"], (self.x - scroll.x, self.y - scroll.y))
+        elif self.type == 1: # rock
+            window.blit(spriteHash["rock"], (self.x - scroll.x, self.y - scroll.y))

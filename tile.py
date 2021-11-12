@@ -24,10 +24,11 @@ class Tile:
     def getYCoord(self):
         return self.type
 
-    def drawTile(self, window, scroll, tileHash):
+    # draws the current tile
+    def drawTile(self, window, scroll, spriteHash):
         if self.type == 0: # grass
-            window.blit(tileHash["grass"], (self.x - scroll.x, self.y - scroll.y))
+            window.blit(spriteHash["grass"], (self.x - scroll.x, self.y - scroll.y))
         elif self.type == 1: # water
-            window.blit(tileHash["water"], (self.x - scroll.x, self.y - scroll.y))
+            window.blit(spriteHash["water"], (self.x - scroll.x, self.y - scroll.y))
         elif self.type == 2: # sand
-            window.blit(tileHash["sand"], (self.x - scroll.x, self.y - scroll.y))
+            window.blit(spriteHash["sand"], (self.x - scroll.x, self.y - scroll.y))
