@@ -14,16 +14,15 @@ class Player:
         self.hitbox = pygame.Rect(self.x, self.y, self.width, self.height)
         self.center = (self.x + (self.width/2), self.y + (self.height/2))
         self.image = image
+        self.inventory = []
+        self.hotbar = []
 
     # draw function to draw player
     def draw(self, window, scroll):
         window.blit(self.image, (self.x -scroll.x, self.y - scroll.y))
 
     # handlePlayerMovement function to handle movement keypresses
-    def handlePlayerMovement(self):
-
-        # get the keys that are pressed
-        keys_pressed = pygame.key.get_pressed()
+    def handlePlayerMovement(self, keys_pressed):
 
         # set temporary values for x, y, and v
         x = 0

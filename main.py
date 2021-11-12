@@ -173,6 +173,49 @@ def drawMobs(player, world, scroll, clickEventPos):
                     if mob.type == 0: #sasuke
                         WINDOW.blit(ENEMY, (mob.x - scroll.x, mob.y - scroll.y))
 
+def handleInventory(player):
+        #call the show inventory loop
+
+        #set up all the rects for the inventory
+        background = pygame.Rect(WIDTH/4, HEIGHT/4, WIDTH/2, HEIGHT/2)
+
+        rectList = []
+        for y in range(3):
+            for x in range(5):
+                rectSlot = pygame.Rect((background.x+background.width/20) + (x*background.width/5), (background.y+background.height/12) + (y*background.height/3),background.width/10, background.height/6)
+                rectList.append(rectSlot)
+
+
+        #we want to give the inventory 15 slots (3 rows of 5)
+        #plus the hotbar of 5 items
+
+
+        exitInventory = False
+        while True:
+            eventList = pygame.event.get()
+            for event in eventList:
+                if event.type == pygame.KEYDOWN:
+                    #call the inventory function
+                    if event.key == pygame.K_TAB:
+                        # handle other button presses (inventory)
+                        exitInventory = True
+                        break
+            if exitInventory == True:
+                break
+            else:
+                #show the inventory
+                pygame.draw.rect(WINDOW, (255, 255, 255), background)
+
+                for rect in rectList:
+                    pygame.draw.rect(WINDOW, (0, 0, 0), rect)
+
+
+                # update the screen
+                pygame.display.update()
+
+                        
+
+
 # main function
 def main():
 
@@ -223,13 +266,21 @@ def main():
                 running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 clickEventPos = pygame.mouse.get_pos()
+            elif event.type == pygame.KEYDOWN:
+                #call the inventory function
+                if event.key == pygame.K_TAB:
+                    # handle other button presses (inventory)
+                    handleInventory(P)
+
 
         # draw the map
         drawWorld(P, W, scroll, clickEventPos)
         drawMobs(P, W, scroll, clickEventPos)
 
         # handle the players movement based on WASD
-        P.handlePlayerMovement()
+        # get the keys that are pressed
+        keys_pressed = pygame.key.get_pressed()
+        P.handlePlayerMovement(keys_pressed)
 
         # draw the test player
         P.draw(WINDOW, scroll)
