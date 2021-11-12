@@ -95,8 +95,6 @@ class Position:
     x = 0
     y = 0
 
-scroll = Position()
-
 # drawWorld function (only draw chunks near character!)
 def drawWorld(player, world, scroll, clickEventPos):
 
@@ -297,6 +295,7 @@ def main():
 
     W = None
     P = None
+    scroll = Position()
 
     # check if a world file is saved or not
     if exists('world.pickle') == False:
@@ -320,8 +319,9 @@ def main():
             # read the world in from pickle file
             W = pickle.load(reader)
             
-            # read the player in from the pickle file, and then remove it from the map dict
+            # read the player and scroll value in from the pickle file, and then remove them from the map dict
             P = W.map.pop('PlayerObject')
+            scroll = W.map.pop('ScrollObject')
 
             print("Loaded a saved world and player!")
 
@@ -365,7 +365,7 @@ def main():
         for event in eventList:
             if event.type == pygame.QUIT:
                 #write the world to file
-                W.saveWorld('world.pickle', P)
+                W.saveWorld('world.pickle', P, scroll)
                 running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 clickEventPos = pygame.mouse.get_pos()
