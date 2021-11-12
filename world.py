@@ -44,7 +44,10 @@ class World:
                 self.map[str(targetX) + ',' + str(targetY)] = c
 
     # this function writes the world out to a file for future use
-    def saveWorld(self, filename):
+    def saveWorld(self, filename, player):
+        #first, append the player data to the map dict
+        self.map['PlayerObject'] = player
+
         with open(filename, 'wb') as writer:
             pickle.dump(self, writer, protocol=pickle.HIGHEST_PROTOCOL)
 

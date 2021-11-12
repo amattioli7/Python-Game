@@ -22,14 +22,16 @@ CHUNK_SIZE = 320
 # setting hardcoded fps
 FPS = 60
 
+# make a tile hashmap
+spriteHash = {}
+
 # test player image
 PLAYER_IMAGE = pygame.image.load(
     os.path.join('Assets', 'naruto.png')
 )
 PLAYER = pygame.transform.scale(PLAYER_IMAGE, (50, 50))
 
-# create the player object
-P = Player(500, 500, 50, 50, PLAYER)
+spriteHash['player'] = PLAYER
 
 # test enemy image
 ENEMY_IMAGE = pygame.image.load(
@@ -38,8 +40,6 @@ ENEMY_IMAGE = pygame.image.load(
 ENEMY = pygame.transform.scale(ENEMY_IMAGE, (50, 50))
 
 # load in the tile images ------------------------------------------------------------
-# make a tile hashmap
-spriteHash = {}
 GRASS = pygame.image.load(
                 os.path.join('Assets', 'grass.png')
             ).convert()
@@ -136,7 +136,7 @@ def drawWorld(player, world, scroll, clickEventPos):
                 for item in world.map[targetChunk].items:
                     item.drawItem(WINDOW, scroll, spriteHash)
                     #check if the item got picked up
-                    world.map[targetChunk].itemGrabbed(P)
+                    world.map[targetChunk].itemGrabbed(player)
                     
 
                
@@ -296,6 +296,7 @@ def main():
     pygame.init()
 
     W = None
+    P = None
 
     # check if a world file is saved or not
     if exists('world.pickle') == False:
@@ -306,14 +307,23 @@ def main():
         # generate the map
         W.createWorld()
 
-        print("Made a new world!")
+        # make a new player
+        # create the player object
+        P = Player(500, 500, 50, 50)
+
+        print("Made a new world and player!")
 
     # load the world in from mem
     else:
         with open('world.pickle', 'rb') as reader:
-            W = pickle.load(reader)
 
-            print("Loaded a saved world!")
+            # read the world in from pickle file
+            W = pickle.load(reader)
+            
+            # read the player in from the pickle file, and then remove it from the map dict
+            P = W.map.pop('PlayerObject')
+
+            print("Loaded a saved world and player!")
 
 
     # set up some variables
@@ -355,7 +365,7 @@ def main():
         for event in eventList:
             if event.type == pygame.QUIT:
                 #write the world to file
-                W.saveWorld('world.pickle')
+                W.saveWorld('world.pickle', P)
                 running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 clickEventPos = pygame.mouse.get_pos()
@@ -376,7 +386,7 @@ def main():
         P.handlePlayerMovement(keys_pressed)
 
         # draw the test player
-        P.draw(WINDOW, scroll)
+        P.drawPlayer(WINDOW, scroll, spriteHash)
 
         # update the window
         pygame.display.update()

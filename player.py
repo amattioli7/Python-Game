@@ -6,20 +6,15 @@ import pygame
 class Player:
 
     # constructor for player object
-    def __init__(self, x, y, width, height, image):
+    def __init__(self, x, y, width, height):
         self.x = x
         self.y = y
         self.width = width
         self.height = height
         self.hitbox = pygame.Rect(self.x, self.y, self.width, self.height)
         self.center = (self.x + (self.width/2), self.y + (self.height/2))
-        self.image = image
         self.inventory = [None] * 15 #making an empty inventory with 15 Nones
         self.hotbar = []
-
-    # draw function to draw player
-    def draw(self, window, scroll):
-        window.blit(self.image, (self.x -scroll.x, self.y - scroll.y))
 
     # handlePlayerMovement function to handle movement keypresses
     def handlePlayerMovement(self, keys_pressed):
@@ -68,6 +63,10 @@ class Player:
                     return True
         
         return False
+
+    # draws the player
+    def drawPlayer(self, window, scroll, spriteHash):
+        window.blit(spriteHash["player"], (self.x - scroll.x, self.y - scroll.y))
             
     # getXCoord function to return players x coord
     def getXCoord(self):
