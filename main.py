@@ -2,7 +2,9 @@
 
 # imports
 import pygame
+import pickle
 import os
+from os.path import exists
 from player import Player
 from enemy import Enemy
 from world import World
@@ -293,11 +295,26 @@ def main():
     #init pygame
     pygame.init()
 
-    # create the world (20x20 chunks)
-    W = World(20, 20, CHUNK_SIZE)
+    W = None
 
-    # generate the map
-    W.createWorld()
+    # check if a world file is saved or not
+    if exists('world.pickle') == False:
+        # make a new world
+        # create the world (20x20 chunks)
+        W = World(20, 20, CHUNK_SIZE)
+
+        # generate the map
+        W.createWorld()
+
+        print("Made a new world!")
+
+    # load the world in from mem
+    else:
+        with open('world.pickle', 'rb') as reader:
+            W = pickle.load(reader)
+
+            print("Loaded a saved world!")
+
 
     # set up some variables
     xBorder = (CHUNK_SIZE*W.xChunks)-WIDTH
@@ -337,6 +354,8 @@ def main():
         clickEventPos = None
         for event in eventList:
             if event.type == pygame.QUIT:
+                #write the world to file
+                W.saveWorld('world.pickle')
                 running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 clickEventPos = pygame.mouse.get_pos()

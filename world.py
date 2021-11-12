@@ -3,6 +3,7 @@
 # imports
 import pygame
 from chunk import Chunk
+import pickle
 
 class World:
 
@@ -41,4 +42,9 @@ class World:
                 c.generateChunk()
                 
                 self.map[str(targetX) + ',' + str(targetY)] = c
+
+    # this function writes the world out to a file for future use
+    def saveWorld(self, filename):
+        with open(filename, 'wb') as writer:
+            pickle.dump(self, writer, protocol=pickle.HIGHEST_PROTOCOL)
 
