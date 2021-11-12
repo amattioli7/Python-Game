@@ -49,18 +49,26 @@ class Player:
     # pickUp function to pick up or leave an item if the inventory is full, returns true if picked up
     def pickUp(self, item):
 
+        emptyIndex = -1
+
         for index, held in enumerate(self.inventory):
 
-            #if the slot is "empty"
+            #if the slot is "empty" and it hasn't been marked, mark it
             if held is None:
-                self.inventory[index] = item
-                return True
+                if emptyIndex == -1:
+                    emptyIndex = index
 
             #add the item to existing stack
             elif item.type == held.type:
                     #increase the stack size by the stacksize
                     self.inventory[index].stackSize += item.stackSize
                     return True
+
+
+        #now do a final check and try to add the item to an empty slot
+        if emptyIndex != -1:
+            self.inventory[emptyIndex] = item
+            return True
         
         return False
 
