@@ -45,7 +45,9 @@ class Entity:
             #can also randomize a stack size for each tree
             wood = Item(self.x, self.y, 20, 20, 1, 0)
             itemList.append(wood)
-        #elif self.type == 1: # rock
+        elif self.type == 1: # rock
             #drop rock and maybe flint?
+            stone = Item(self.x, self.y, 20, 20, 1, 1)
+            itemList.append(stone)
         return itemList
             

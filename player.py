@@ -56,11 +56,19 @@ class Player:
 
         #check if inventory is empty
         if len(self.inventory) != 0:
+            count = 0
             for held in self.inventory:
                 if item.type == held.type:
                     #increase the stack size by 1
                     held.stackSize += 1
                     return True
+                count += 1
+            
+            #check if there is still room to add items
+            if count < 15:
+                self.inventory.append(item)
+                return True
+
             return False
         #add the item to the inventory
         else:

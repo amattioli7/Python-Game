@@ -79,6 +79,13 @@ WOODITEM = pygame.transform.scale(WOODITEM_IMAGE, (20, 20))
 
 spriteHash["woodItem"] = WOODITEM
 
+STONEITEM_IMAGE = pygame.image.load(
+                os.path.join('Assets', 'stoneitem.png')
+            ).convert_alpha()
+STONEITEM = pygame.transform.scale(STONEITEM_IMAGE, (20, 20))
+
+spriteHash["stoneItem"] = STONEITEM
+
 
 # scroll dataclass ---------------------------------------------------------------------
 @dataclass
