@@ -214,16 +214,42 @@ def handleInventory(player):
         #plus the hotbar of 5 items
 
 
+        #set up the two variables for swapping
+        slot1 = None
+        slot2 = None
+
+
         exitInventory = False
         while True:
             eventList = pygame.event.get()
             for event in eventList:
                 if event.type == pygame.KEYDOWN:
-                    #call the inventory function
+                    
                     if event.key == pygame.K_TAB:
                         # handle other button presses (inventory)
                         exitInventory = True
                         break
+
+                #check if one of the slots was clicked
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    clickEventPos = pygame.mouse.get_pos()
+                    for index, slot in enumerate(rectList):
+                        # we have clicked on the first item, just set slot 1
+                        if slot.collidepoint(clickEventPos) and slot1 is None:
+                            slot1 = index
+                        # we have clicked on the second item, and need to swap. Also, need to reset slot1 and slt 2 to none after
+                        elif slot.collidepoint(clickEventPos) and slot1 is not None:
+                            slot2 = index
+
+                            #now, swap the items at slot 1 and slot 2
+                            tempItem = player.inventory[slot1]
+                            player.inventory[slot1] = player.inventory[slot2]
+                            player.inventory[slot2] = tempItem
+
+                            #reset slots to None
+                            slot1 = None
+                            slot2 = None
+                    
             if exitInventory == True:
                 break
             else:
@@ -253,6 +279,10 @@ def handleInventory(player):
                 #print(P.inventory)
                 # update the screen
                 pygame.display.update()
+
+                #we need to allow swaps for the inventory
+                #have two variables (clickedOne and clickedTwo)
+                #once both are filled, and they arent the same, swap
 
                         
 
