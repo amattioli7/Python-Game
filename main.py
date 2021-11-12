@@ -36,34 +36,41 @@ ENEMY_IMAGE = pygame.image.load(
 ENEMY = pygame.transform.scale(ENEMY_IMAGE, (50, 50))
 
 # load in the tile images ------------------------------------------------------------
+# make a tile hashmap
+tileHash = {}
 GRASS = pygame.image.load(
                 os.path.join('Assets', 'grass.png')
             ).convert()
 
-DGRASS_IMAGE = pygame.image.load(
-                os.path.join('Assets', 'dgrass.png')
-            ).convert()
-DGRASS = pygame.transform.scale(DGRASS_IMAGE, (32, 32))
+tileHash["grass"] = GRASS
 
 WATER_IMAGE = pygame.image.load(
                 os.path.join('Assets', 'water.png')
             ).convert()
 WATER = pygame.transform.scale(WATER_IMAGE, (32, 32))
 
+tileHash["water"] = WATER
+
 SAND_IMAGE = pygame.image.load(
                 os.path.join('Assets', 'sand.png')
             ).convert()
 SAND = pygame.transform.scale(SAND_IMAGE, (32, 32))
+
+tileHash["sand"] = SAND
 
 TREE_IMAGE = pygame.image.load(
                 os.path.join('Assets', 'tree.png')
             ).convert_alpha()
 TREE = pygame.transform.scale(TREE_IMAGE, (64, 128))
 
+tileHash["tree"] = TREE
+
 ROCK_IMAGE = pygame.image.load(
                 os.path.join('Assets', 'rock.png')
             ).convert_alpha()
 ROCK = pygame.transform.scale(ROCK_IMAGE, (32, 32))
+
+tileHash["rock"] = ROCK
 
 # scroll dataclass ---------------------------------------------------------------------
 @dataclass
@@ -100,14 +107,7 @@ def drawWorld(player, world, scroll, clickEventPos):
                 # now, draw the tiles close to the player!
                 for tile in world.map[targetChunk].tiles:
                     #draw it
-                    if tile.type == 0: # grass
-                        WINDOW.blit(GRASS, (tile.x - scroll.x, tile.y - scroll.y))
-                    elif tile.type == 1: # water
-                        WINDOW.blit(WATER, (tile.x - scroll.x, tile.y - scroll.y))
-                    elif tile.type == 2: # sand
-                        WINDOW.blit(SAND, (tile.x - scroll.x, tile.y - scroll.y))
-                    else: # dark grass
-                        WINDOW.blit(DGRASS, (tile.x - scroll.x, tile.y - scroll.y))
+                    tile.drawTile(WINDOW, scroll, tileHash)
 
                 # after this, draw everything else in the chunk!
                 #world.map[targetChunk].drawEntities(WINDOW)
