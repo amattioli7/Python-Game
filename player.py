@@ -14,7 +14,7 @@ class Player:
         self.hitbox = pygame.Rect(self.x, self.y, self.width, self.height)
         self.center = (self.x + (self.width/2), self.y + (self.height/2))
         self.image = image
-        self.inventory = []
+        self.inventory = [None] * 15 #making an empty inventory with 15 Nones
         self.hotbar = []
 
     # draw function to draw player
@@ -54,29 +54,21 @@ class Player:
     # pickUp function to pick up or leave an item if the inventory is full, returns true if picked up
     def pickUp(self, item):
 
-        #check if inventory is empty
-        if len(self.inventory) != 0:
-            count = 0
-            for held in self.inventory:
-                if item.type == held.type:
-                    #increase the stack size by 1
-                    held.stackSize += 1
-                    return True
-                count += 1
-            
-            #check if there is still room to add items
-            if count < 15:
-                self.inventory.append(item)
+        for index, held in enumerate(self.inventory):
+
+            #if the slot is "empty"
+            if held is None:
+                self.inventory[index] = item
                 return True
 
-            return False
-        #add the item to the inventory
-        else:
-            self.inventory.append(item)
-            return True
-
-
-
+            #add the item to existing stack
+            elif item.type == held.type:
+                    #increase the stack size by the stacksize
+                    self.inventory[index].stackSize += item.stackSize
+                    return True
+        
+        return False
+            
     # getXCoord function to return players x coord
     def getXCoord(self):
         return self.x

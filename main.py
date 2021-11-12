@@ -237,16 +237,16 @@ def handleInventory(player):
                     pygame.draw.rect(WINDOW, (0, 0, 0), rect) 
 
                     # get the inventory item
-                    if index < len(player.inventory):
-                        item = player.inventory[index]
+                    #if index < len(player.inventory):
+                    item = player.inventory[index]
 
-                        #check if item exists, if it does, draw it
-                        if item is not None:
-                            item.drawItemInventory(WINDOW, spriteHash, rect.x, rect.y)
-                            #also draw how many items is in the stack (maybe we can max it at 99?)
-                            numberOfItems = "x" + str(item.stackSize)
-                            text = font.render(numberOfItems, True, (255, 255, 255))
-                            WINDOW.blit(text, (rect.x + 20, rect.y + 20))
+                    #check if item exists, if it does, draw it
+                    if item is not None:
+                        item.drawItemInventory(WINDOW, spriteHash, rect.x, rect.y)
+                        #also draw how many items is in the stack (maybe we can max it at 99?)
+                        numberOfItems = "x" + str(item.stackSize)
+                        text = font.render(numberOfItems, True, (255, 255, 255))
+                        WINDOW.blit(text, (rect.x + 20, rect.y + 20))
 
 
 
