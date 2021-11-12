@@ -45,7 +45,7 @@ class Entity:
             #drop wood and maybe sapling eventually?
             #can also randomize a stack size for each tree
             numberOfLogs = random.randint(8, 12)
-            wood = Item(self.x, self.y, 20, 20, numberOfLogs, 0)
+            wood = Item(self.x + 20, self.y + 100, 20, 20, numberOfLogs, 0)
             itemList.append(wood)
         elif self.type == 1: # rock
             #drop rock and maybe flint?
