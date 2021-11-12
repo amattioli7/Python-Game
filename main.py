@@ -72,6 +72,14 @@ ROCK = pygame.transform.scale(ROCK_IMAGE, (32, 32))
 
 spriteHash["rock"] = ROCK
 
+WOODITEM_IMAGE = pygame.image.load(
+                os.path.join('Assets', 'wooditem.png')
+            ).convert_alpha()
+WOODITEM = pygame.transform.scale(WOODITEM_IMAGE, (20, 20))
+
+spriteHash["woodItem"] = WOODITEM
+
+
 # scroll dataclass ---------------------------------------------------------------------
 @dataclass
 class Position:
@@ -110,10 +118,20 @@ def drawWorld(player, world, scroll, clickEventPos):
                     tile.drawTile(WINDOW, scroll, spriteHash)
 
                 # after this, draw everything else in the chunk!
-                #world.map[targetChunk].drawEntities(WINDOW)
+                #draw the entities
                 for entity in world.map[targetChunk].entities:
                     #draw it
                     entity.drawEntity(WINDOW, scroll, spriteHash)
+
+                #draw the items
+                for item in world.map[targetChunk].items:
+                    item.drawItem(WINDOW, scroll, spriteHash)
+                    #check if the item got picked up
+                    world.map[targetChunk].itemGrabbed(P)
+                    
+
+               
+
                     
 
 def drawMobs(player, world, scroll, clickEventPos):

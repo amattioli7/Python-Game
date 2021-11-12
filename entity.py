@@ -3,6 +3,7 @@
 # imports
 import pygame
 import os
+from item import Item
 
 class Entity:
 
@@ -34,3 +35,16 @@ class Entity:
             window.blit(spriteHash["tree"], (self.x - scroll.x, self.y - scroll.y))
         elif self.type == 1: # rock
             window.blit(spriteHash["rock"], (self.x - scroll.x, self.y - scroll.y))
+
+    # drops an item when the entity is broken
+    def dropItems(self):
+        itemList = []
+
+        if self.type == 0: # tree
+            #drop wood and maybe sapling eventually?
+            wood = Item(self.x, self.y, 20, 20, 1, 0)
+            itemList.append(wood)
+        #elif self.type == 1: # rock
+            #drop rock and maybe flint?
+        return itemList
+            

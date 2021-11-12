@@ -31,6 +31,7 @@ class Chunk:
         self.tiles = []
         self.entities = []
         self.mobs = []
+        self.items = []
 
         #we can have a flag or bool to show if this chunk is loaded
         #this could be useful for determining whether a chunk that is being loaded in should have a chance for enemies to spawn
@@ -96,7 +97,25 @@ class Chunk:
             if entity.hitbox.collidepoint(mousePos):
                 #make sure entity is in range of player
                 if inRangeOfEntity(entity.center, playerCenter):
+                    #get the dropped items from the entity
+                    itemList = entity.dropItems()
+                    #append this itemList to the chunks itemList
+                    self.items.extend(itemList)
+                    #remove the entity from the chunk
                     self.entities.remove(entity)
+
+    # itemGrabbed function to determine if an item in the chunk was picked up
+    def itemGrabbed(self, player):
+        for item in self.items:
+            
+            #make sure item is in range of player
+            if inRangeOfItem(item.center, player.center):
+                #add the item to the player inventory (if room!, for now don't check this)
+                player.inventory.append(item)
+                
+                #remove the item from the chunk
+                self.items.remove(item)
+
 
 # inRangeOfEntity helper function to determine whether the player is in range to hit an entity
 def inRangeOfEntity(entityCenter, playerCenter):
@@ -107,6 +126,19 @@ def inRangeOfEntity(entityCenter, playerCenter):
     #or could be changed based on entity type
 
     if distance < 75:
+        return True
+    else:
+        return False
+
+# inRangeOfItem helper function to determine whether the player is in range to pick up an item
+def inRangeOfItem(itemCenter, playerCenter):
+    #calculate euclidean distance
+    distance = ( ((itemCenter[0] - playerCenter[0])**2) + ((itemCenter[1] - playerCenter[1])**2) )**0.5
+
+    #if the player is 75 pixels or less away from the entity (and this could be changed based on weapon equipped, etc...)
+    #or could be changed based on entity type
+
+    if distance < 5:
         return True
     else:
         return False
